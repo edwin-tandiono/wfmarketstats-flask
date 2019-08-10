@@ -4,7 +4,7 @@ from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
-cors = CORS(app, resources={"*": {"origins": "http://localhost:3000"}})
+cors = CORS(app, resources={"*": {"origins": "https://echo-delta.github.io/warframe-market-stats/"}})
 			
 @app.route('/items')
 def get_items():
