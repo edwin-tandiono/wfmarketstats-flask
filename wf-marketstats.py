@@ -1,0 +1,66 @@
+from flask import Flask, redirect, url_for, request, render_template, jsonify
+from flask_cors import CORS
+
+import requests
+
+app = Flask(__name__)
+cors = CORS(app, resources={"*": {"origins": "http://localhost:3000"}})
+			
+@app.route('/items')
+def get_items():
+	url = "https://api.warframe.market/v1/items"
+	result = requests.get(url).json()["payload"]["items"]
+	for item in result:
+		del item["id"]
+		del item["thumb"]
+	return jsonify(result)
+	
+@app.route('/items/<item_url>')
+def get_item_detail(item_url):
+	url = "https://api.warframe.market/v1/items/%s" % item_url
+	item_detail = requests.get(url).json()["payload"]["item"]["items_in_set"][0]
+	mod_max_rank = -1
+	if "mod_max_rank" in item_detail:
+		mod_max_rank = item_detail["mod_max_rank"]
+		
+	url = "https://api.warframe.market/v1/items/%s/orders" % item_url
+	all_orders = requests.get(url).json()["payload"]["orders"]
+	if mod_max_rank == -1:
+		min = -1
+		max = -1
+		for order in all_orders:
+			if order["user"]["status"] == "ingame":
+				if (min == -1 or order["platinum"] < min) and order["order_type"] == "sell":
+					min = order["platinum"]
+				if (max == -1 or order["platinum"] > max) and order["order_type"] == "buy":
+					max = order["platinum"]
+		orders = {"min_sell":min, "max_buy":max}
+	else:
+		r0_min = -1
+		r0_max = -1
+		rmax_min = -1
+		rmax_max = -1
+		for order in all_orders:
+			if order["user"]["status"] == "ingame" and order["mod_rank"] == 0:
+				if (r0_min == -1 or order["platinum"] < r0_min) and order["order_type"] == "sell":
+					r0_min = order["platinum"]
+				if (r0_max == -1 or order["platinum"] > r0_max) and order["order_type"] == "buy":
+					r0_max = order["platinum"]
+			if order["user"]["status"] == "ingame" and order["mod_rank"] == mod_max_rank:
+				if (rmax_min == -1 or order["platinum"] < rmax_min) and order["order_type"] == "sell":
+					rmax_min = order["platinum"]
+				if (rmax_max == -1 or order["platinum"] > rmax_max) and order["order_type"] == "buy":
+					rmax_max = order["platinum"]
+		orders = {"rank_0":{"min_sell":r0_min, "max_buy":r0_max},"max_rank":{"min_sell":rmax_min, "max_buy":rmax_max}}
+	
+	url = "https://api.warframe.market/v1/items/%s/statistics" % item_url
+	stats = requests.get(url).json()["payload"]["statistics_closed"]["90days"]
+	if mod_max_rank == -1:
+		stats = [{"datetime":x["datetime"], "avg_price":x["avg_price"]} for x in stats]
+	else:
+		stats = {"rank_0":[{"datetime":x["datetime"], "avg_price":x["avg_price"]} for x in stats if x["mod_rank"] == 0], "max_rank":[{"datetime":x["datetime"], "avg_price":x["avg_price"]} for x in stats if x["mod_rank"] == mod_max_rank]}
+			
+	return jsonify(mod_max_rank=mod_max_rank, orders=orders, stats=stats)
+ 
+if __name__ == '__main__':
+   app.run(debug=True)
