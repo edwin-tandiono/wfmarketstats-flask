@@ -1,16 +1,21 @@
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 import requests
 
 app = Flask(__name__)
 cors = CORS(app, resources={"*": {"origins": "https://echo-delta.github.io"}})
-			
+limiter = Limiter(app, key_func=get_remote_address)
+
 @app.route('/')
+@limiter.exempt
 def index():
 	return render_template("index.html")
 			
 @app.route('/items')
+@limiter.limit("1/second")
 def get_items():
 	url = "https://api.warframe.market/v1/items"
 	result = requests.get(url).json()["payload"]["items"]
@@ -20,6 +25,7 @@ def get_items():
 	return jsonify(result)
 	
 @app.route('/items/<item_url>')
+@limiter.limit("1/second")
 def get_item_detail(item_url):
 	url = "https://api.warframe.market/v1/items/%s" % item_url
 	result = requests.get(url)
