@@ -6,6 +6,10 @@ import requests
 app = Flask(__name__)
 cors = CORS(app, resources={"*": {"origins": "https://echo-delta.github.io"}})
 			
+@app.route('/')
+def index():
+	return render_template("index.html")
+			
 @app.route('/items')
 def get_items():
 	url = "https://api.warframe.market/v1/items"
@@ -18,7 +22,10 @@ def get_items():
 @app.route('/items/<item_url>')
 def get_item_detail(item_url):
 	url = "https://api.warframe.market/v1/items/%s" % item_url
-	item_detail = requests.get(url).json()["payload"]["item"]["items_in_set"][0]
+	result = requests.get(url)
+	if result.status_code != 200:
+		return jsonify(result.json())
+	item_detail = result.json()["payload"]["item"]["items_in_set"][0]
 	mod_max_rank = -1
 	if "mod_max_rank" in item_detail:
 		mod_max_rank = item_detail["mod_max_rank"]
