@@ -3,7 +3,7 @@ Back-end for [warframe market stats](https://github.com/echo-delta/warframe-mark
 
 
 ## Disclaimer
-This project is nade for learning purposes. Please don't expect the endpoint to work reliably.
+This project is made for learning purposes. Please don't expect the endpoints to work reliably.
 
 ## Description
 Warframe Market is a great app that allows users to place their orders for in-game items. Not only that, users also use this app to determine item prices based on its statistics. However, accessing the statistics page through the app requires a few clicks and loads away. This custom API is made to summarize all the information I need to determine item prices in a single request.
