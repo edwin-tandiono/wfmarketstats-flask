@@ -1,5 +1,5 @@
 # wfmarketstats-flask
-Back-end for [warframe market stats](https://github.com/echo-delta/warframe-market-stats) written using Python Flask. Pay a visit at [https://echo-delta.github.io/warframe-market-stats](https://echo-delta.github.io/warframe-market-stats) to try the web interface!
+Back-end for [warframe market stats](https://github.com/edwin-tandiono/warframe-market-stats) written using Python Flask. Pay a visit at [https://edwin-tandiono.github.io/warframe-market-stats](https://edwin-tandiono.github.io/warframe-market-stats) to try the web interface!
 
 
 ## Disclaimer
