@@ -20,7 +20,7 @@ GLOBAL_KEY_FUNC = "wf_marketstats"
 def get_global_key_func():
 	return GLOBAL_KEY_FUNC
 
-limiter = Limiter(app, key_func=get_global_key_func)
+limiter = Limiter(key_func=get_global_key_func, app=app)
 
 # Info page
 @app.route('/')

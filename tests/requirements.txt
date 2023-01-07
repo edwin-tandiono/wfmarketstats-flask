@@ -1,2 +1,1 @@
-Jinja2==3.0.3
-locust==2.8.6
+locust==2.14.2
