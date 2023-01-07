@@ -23,7 +23,7 @@ def get_global_key_func():
 limiter = Limiter(key_func=get_global_key_func, app=app)
 
 # Info page
-@app.route('/')
+@app.route('/wfmarketstats-flask')
 @limiter.exempt
 def index():
 	return render_template("index.html")
@@ -32,7 +32,7 @@ def index():
 # 
 # Since we are only interested on their URL and names, we remove other
 # unecessary properties
-@app.route('/items')
+@app.route('/wfmarketstats-flask/items')
 @limiter.limit("3/second")
 def get_items():
 	url = "https://api.warframe.market/v1/items"
@@ -53,7 +53,7 @@ def get_items():
 # 
 # This endpoint will call 3 other endpoints from the Warframe Market server,
 # so we only limit this to 1 RPS
-@app.route('/items/<item_url>')
+@app.route('/wfmarketstats-flask/items/<item_url>')
 @limiter.limit("1/second")
 def get_item_detail(item_url):
 	# Get item details
