@@ -19,4 +19,4 @@ Rank 0 and max rank stats are available for mods and arcanes.
 Note that requests is limited to 1 request per second. This is to comply to warframe market public API recommendation of 3 request per second, as each request to this custom API will gather information from 3 endpoint in the warframe market public API (item information, order information, and statistics).
 
 ## Acknowledgements
-Big thanks to Digital Extremes for the great game, also to Warframe Market team to provide such a useful public API. The public API is available at [this link](https://docs.google.com/document/d/1121cjBNN4BeZdMBGil6Qbuqse-sWpEXPpitQH5fb_Fo). This project is made for learning purposes, and all information used belong to their respective owners.
+Big thanks to Digital Extremes for the great game, also to Warframe Market team to provide such a useful [public API](https://warframe.market/api_docs). This project is made for learning purposes, and all information used belong to their respective owners.
