@@ -9,7 +9,7 @@ This project is made for learning purposes. Please don't expect the endpoints to
 Warframe Market is a great app that allows users to place their orders for in-game items. Not only that, users also use this app to determine item prices based on its statistics. However, accessing the statistics page through the app requires a few clicks and loads away. This custom API is made to summarize all the information I need to determine item prices in a single request.
 
 ## Usage
-`GET https://edwintandiono.pythonanywhere.com/items/<item-url-name>` to get item price information which includes:
+`GET https://edwintandiono.pythonanywhere.com/wfmarketstats-flask/items/<item-url-name>` to get item price information which includes:
 * Latest daily average price  
 * Lowest offer from online seller
 * Highest offer from online buyer
