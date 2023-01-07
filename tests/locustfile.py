@@ -1,6 +1,5 @@
 # Locust file to test request limit.
 #
-# Make sure you have the latest locust & jinja 2 is installed.
 # Running `locust` will start the web interface by default at
 # http://localhost:8089 where you can spawn users and set your
 # wf-marketstats server URL.
