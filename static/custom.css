@@ -1,3 +1,26 @@
 body {
-	font-family: "Trebuchet MS";
+	background: #202020;
+	font-family: "courier new", "arial";
 }
+
+.main {
+	align-items: center;
+	color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	height: 90%;
+	justify-content: center;
+	text-align: center;
+}
+
+a {
+	background: #3a3a3a;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:hover {
+	background: #4b4b4b;
+}
+
+
