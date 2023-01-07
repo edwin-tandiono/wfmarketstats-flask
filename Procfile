@@ -1,1 +1,1 @@
-web gunicorn wf-marketstats:app
+web: gunicorn wf-marketstats:app --log-file=-
